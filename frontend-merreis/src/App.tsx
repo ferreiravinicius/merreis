@@ -1,11 +1,12 @@
-import React from 'react';
+import React from "react";
+import FormExpenses from "./pages/expenses/FormExpenses";
 
 const App = () => {
   return (
-    <div className="App">
-      Yo
-    </div>
+    <>
+      <FormExpenses />
+    </>
   );
-}
+};
 
 export default App;
