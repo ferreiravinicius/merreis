@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { handleInputChange, handleSelectChange, toOption } from "../../commons/utils";
+import { handleInputChange, handleSelectChange } from "../../commons/utils";
 import UInput from "../../components/forms/UInput";
-import USelect, { Option } from "../../components/forms/USelect";
+import USelect from "../../components/forms/USelect";
 import { Expense, Group } from "../../types/models";
-import { IForm } from "../../types/globals";
 
 export interface Props {}
 
@@ -29,7 +28,8 @@ const FormExpenses: React.FunctionComponent<Props> = () => {
         name="group"
         label="Group"
         value={expense.group}
-        options={groupsOptions}
+        options={groups}
+        getOptionLabel={(option: Group) => option.name}
         onChange={handleSelectChange(setExpense, "group")}
       />
       <button onClick={() => console.log(expense)}>Enviar</button>
@@ -38,8 +38,5 @@ const FormExpenses: React.FunctionComponent<Props> = () => {
 };
 
 const groups: Group[] = [{ id: 1, name: "Lazer" }];
-const groupsOptions: Option<Group>[] = groups.map((group: Group) =>
-  toOption<Group>(group, group.name)
-);
 
 export default FormExpenses;

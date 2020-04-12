@@ -6,7 +6,7 @@ export enum Recurrency {
 
 export interface Group {
   id?: number
-  name?: string
+  name: string
 }
 
 export interface Tag {
