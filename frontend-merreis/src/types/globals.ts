@@ -1,3 +1,3 @@
-export interface Global {
-  np: string
+export interface IForm<T> {
+  convert: () => T; 
 }

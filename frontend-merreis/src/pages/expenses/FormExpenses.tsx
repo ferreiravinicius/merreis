@@ -3,10 +3,12 @@ import { handleInputChange, handleSelectChange, toOption } from "../../commons/u
 import UInput from "../../components/forms/UInput";
 import USelect, { Option } from "../../components/forms/USelect";
 import { Expense, Group } from "../../types/models";
+import { IForm } from "../../types/globals";
 
 export interface Props {}
 
 const FormExpenses: React.FunctionComponent<Props> = () => {
+  
   const defaultExpense: Expense = {
     tags: [],
     group: null,
@@ -24,9 +26,11 @@ const FormExpenses: React.FunctionComponent<Props> = () => {
         onChange={handleInputChange(setExpense)}
       />
       <USelect
-        onChange={handleSelectChange(setExpense, "group")}
+        name="group"
+        label="Group"
+        value={expense.group}
         options={groupsOptions}
-        name="Group"
+        onChange={handleSelectChange(setExpense, "group")}
       />
       <button onClick={() => console.log(expense)}>Enviar</button>
     </>

@@ -1,12 +1,10 @@
 import { ChangeEvent } from "react";
 import { Option } from "./../components/forms/USelect";
 
-export const toOption = <T>(item: T, label: string | undefined): Option<T> => {
-  return {
-    item,
-    label: label || "",
-  };
-};
+export const toOption = <T>(item: T, label: string | undefined): Option<T> => ({
+  item,
+  label: label || "",
+});
 
 export const handleInputChange = <T>(
   setter: React.Dispatch<React.SetStateAction<T>>
