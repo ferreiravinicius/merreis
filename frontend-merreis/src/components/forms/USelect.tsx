@@ -1,9 +1,5 @@
-import {
-  Autocomplete,
-  AutocompleteProps,
-  RenderInputParams,
-  UseAutocompleteProps,
-} from "@material-ui/lab";
+import { FormControl } from "@material-ui/core";
+import { Autocomplete, AutocompleteProps, RenderInputParams, UseAutocompleteProps } from "@material-ui/lab";
 import React from "react";
 import UInput from "./UInput";
 export interface Props {
@@ -17,12 +13,14 @@ export type USelectProps<T> = Omit<AutocompleteProps<T>, "renderInput"> &
 
 function USelect<T>({ name, label, ...props }: USelectProps<T>): JSX.Element {
   return (
-    <Autocomplete<T>
-      renderInput={(params: RenderInputParams) => (
-        <UInput label={label || name} {...params} />
-      )}
-      {...props}
-    />
+    <FormControl fullWidth>
+      <Autocomplete<T>
+        renderInput={(params: RenderInputParams) => (
+          <UInput label={label || name} {...params} />
+        )}
+        {...props}
+      />
+    </FormControl>
   );
 }
 

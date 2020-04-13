@@ -8,16 +8,8 @@ export interface Group {
   id?: number
   name: string
 }
-
-export interface Tag {
-  id?: number
-  name?: string
-  groups: Group[]
-}
-
 export interface Expense {
-  tags?: Tag[]
-  value?: number
+  value: number | null
   group?: Group | null
   description?: string
   recurrency?: Recurrency | null
