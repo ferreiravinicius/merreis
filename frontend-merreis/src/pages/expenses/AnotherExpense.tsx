@@ -1,9 +1,9 @@
-import { Container } from "@material-ui/core";
-import { Formik, FormikProps, useFormik } from "formik";
+import { Container, Grid } from "@material-ui/core";
+import { Formik, FormikProps } from "formik";
 import React from "react";
+import * as Yup from "yup";
 import UForm from "../../components/forms/UForm";
 import UInput from "../../components/forms/UInput";
-import * as Yup from "yup";
 
 export interface Props {}
 
@@ -31,7 +31,16 @@ const AnotherExpense: React.FC<Props> = () => {
       >
         {(props: FormikProps<FormValues>) => (
           <UForm>
-            <UInput name="description" label="Description" autoComplete="off" />
+            <Grid item xs={12}>
+              <UInput
+                name="description"
+                label="Description"
+                autoComplete="off"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <UInput name="other" label="Other" autoComplete="off" />
+            </Grid>
             <button type="submit">Enviar</button>
           </UForm>
         )}
