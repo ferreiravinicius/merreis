@@ -1,4 +1,5 @@
-import { Grid, GridProps } from "@material-ui/core";
+import { GridProps } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 import { Form } from "formik";
 import React from "react";
 

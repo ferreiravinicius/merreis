@@ -16,7 +16,7 @@ function USelect<T>({ name, label, ...props }: USelectProps<T>): JSX.Element {
     <FormControl fullWidth>
       <Autocomplete<T>
         renderInput={(params: RenderInputParams) => (
-          <UInput label={label || name} {...params} />
+          <UInput name="quiet" {...params} />
         )}
         {...props}
       />
