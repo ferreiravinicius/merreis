@@ -11,18 +11,28 @@ type UInputProps<T> = Exclude<TextFieldProps, FieldInputProps<T>> & Props;
 
 function UInput<T>({
   name,
+  error,
   variant,
   helperText,
   ...props
 }: UInputProps<T>): JSX.Element {
-  const [field, { error }] = useField<T>(name);
+  const [field, { error: validationError }] = useField<T>(name);
+  
+  const existsValidationError: boolean = !!validationError;
+  const existsError: boolean = error || existsValidationError;
+
+  const extractMessage = (): any => {
+    if (error && !!helperText) return helperText;
+    if (existsValidationError) return validationError;
+    return helperText;
+  };
 
   return (
     <FormControl fullWidth>
       <TextField
         variant="outlined"
-        error={!!error}
-        helperText={error || helperText}
+        error={existsError}
+        helperText={extractMessage()}
         {...field}
         {...props}
       />

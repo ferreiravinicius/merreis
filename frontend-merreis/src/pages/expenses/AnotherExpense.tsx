@@ -4,21 +4,23 @@ import React from "react";
 import * as Yup from "yup";
 import UForm from "../../components/forms/UForm";
 import UInput from "../../components/forms/UInput";
+import UAutocomplete from "../../components/forms/UAutocomplete";
+import { Group } from "../../types/models";
 
 export interface Props {}
 
 interface FormValues {
   description: string;
-  other?: string;
+  group: Group | null
 }
 
 const initialValues: FormValues = {
-  other: "",
   description: "",
+  group: null
 };
 
 const FormSchema = Yup.object().shape({
-  other: Yup.string().min(3, "Description must have atleast 3 characters!"),
+  description: Yup.string().min(3, "Description must have atleast 3 characters!"),
 });
 
 const AnotherExpense: React.FC<Props> = () => {
@@ -39,7 +41,12 @@ const AnotherExpense: React.FC<Props> = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <UInput name="other" label="Other" autoComplete="off" />
+              <UAutocomplete 
+                name="group"
+                label="Group"
+                options={groups}
+                getOptionLabel={(option: Group) => option.name}
+              />
             </Grid>
             <button type="submit">Enviar</button>
           </UForm>
@@ -48,5 +55,11 @@ const AnotherExpense: React.FC<Props> = () => {
     </Container>
   );
 };
+
+const groups: Group[] = [
+  { id: 1, name: "Lazer" },
+  { id: 1, name: "Teste" },
+  { id: 1, name: "Outros" },
+];
 
 export default AnotherExpense;
