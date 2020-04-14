@@ -1,10 +1,10 @@
 import React from "react";
-import AnotherExpense from "./pages/expenses/AnotherExpense";
+import RegisterExpense from "./pages/expenses/RegisterExpense";
 
 const App = () => {
   return (
     <>
-      <AnotherExpense />
+      <RegisterExpense />
     </>
   );
 };
