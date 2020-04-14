@@ -8,17 +8,20 @@ import UButton from "../../components/UButton";
 import CheckOutlined from "@material-ui/icons/CheckOutlined";
 import * as Yup from "yup";
 import { Autocomplete, RenderInputParams } from "@material-ui/lab";
+import UAutocomplete from "../../components/forms/UAutocomplete";
 
 export interface Props {}
 
 interface FormValues {
   group: Group | null;
   description: string;
+  others: Group[];
 }
 
 const initialValues: FormValues = {
   group: null,
   description: "Teste",
+  others: []
 };
 
 const FormSchema = Yup.object().shape({
@@ -49,13 +52,6 @@ const RegisterExpense: React.FunctionComponent<Props> = () => {
     <Container maxWidth="md">
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          {/* <UInput
-            name="description"
-            label="Description"
-            value={expense.description}
-            onChange={handleInputChange({ setter: setExpense })}
-          /> */}
-
           <UInput 
             label="Description"
             value={expense.description}
@@ -65,34 +61,24 @@ const RegisterExpense: React.FunctionComponent<Props> = () => {
 
         <Grid item xs={12}>
 
-          {/* <Autocomplete 
+          <UAutocomplete 
+            value={expense.others}
+            options={groups}
+            getOptionLabel={(option: Group) => option.name}
+            multiple={true}
+            onChange={handleSelectChange({
+              setter: setExpense,
+              state: "others",
+            })}
+          />
+{/* 
+          <Autocomplete 
             value={expense.group}
             options={groups}
             getOptionLabel={(option: Group) => option.name}
             renderInput={(params: RenderInputParams) => (
               <TextField {...params} />
             )}
-            onChange={handleSelectChange({
-              setter: setExpense,
-              state: "group",
-            })}
-          /> */}
-
-          {/* <UInput
-            name="value"
-            label="Value"
-            value={expense.value}
-            onChange={handleInputChange({ setter: setExpense })}
-          /> */}
-        </Grid>
-
-        <Grid item xs={12}>
-          {/* <USelect
-            name="group"
-            label="Group"
-            value={expense.group}
-            options={groups}
-            getOptionLabel={(option: Group) => option.name}
             onChange={handleSelectChange({
               setter: setExpense,
               state: "group",

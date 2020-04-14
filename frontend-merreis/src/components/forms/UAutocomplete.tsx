@@ -1,4 +1,4 @@
-import { FormControl } from "@material-ui/core";
+import { FormControl, TextField } from "@material-ui/core";
 import {
   Autocomplete,
   RenderInputParams,
@@ -8,39 +8,25 @@ import React from "react";
 import UInput from "./UInput";
 
 export interface Props {
-  name: string;
-  label?: string | undefined;
-  helperText?: string;
+  label?: string;
 }
 
 export type UAutocompleteProps<T> = UseAutocompleteProps<T> & Props;
 
-function UAutocomplete<T>({
-  name,
+const UAutocomplete = <T extends {}>({
   label,
-  helperText,
   ...props
-}: UAutocompleteProps<T>): JSX.Element {
-
+}: UAutocompleteProps<T>): JSX.Element => {
   return (
     <FormControl fullWidth>
-      {/* <Autocomplete<T>
-        {...props}
+      <Autocomplete<T>
         renderInput={(params: RenderInputParams) => (
-          // <UInput
-          //   name={field.name}
-          //   label={label}
-          //   error={!!error}
-          //   helperText={error || helperText} 
-          //   {...params}
-          // />
+          <UInput label={label} {...params} />
         )}
-        onChange={handleChange}
-        onBlur={field.onBlur}
-        value={field.value}
-      /> */}
+        {...props}
+      />
     </FormControl>
   );
-}
+};
 
 export default UAutocomplete;

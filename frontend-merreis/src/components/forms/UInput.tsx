@@ -14,7 +14,7 @@ interface Props {
 
 type UInputProps = TextFieldProps & Props;
 
-type AliasEvent = React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>;
+type InputChangeEvent = React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>;
 
 const UInput: React.FC<UInputProps> = ({
   onChange,
@@ -34,7 +34,7 @@ const UInput: React.FC<UInputProps> = ({
     }
   }, [setter]);
 
-  const handleChange = (event: AliasEvent) => {
+  const handleChange = (event: InputChangeEvent) => {
     call(handleState, event.target.value);
     call(onChange, event);
   };
