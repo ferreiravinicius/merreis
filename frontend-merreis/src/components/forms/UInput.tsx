@@ -1,43 +1,49 @@
 import { TextFieldProps } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
-import { FieldInputProps, useField } from "formik";
-import React from "react";
+import React, { useCallback } from "react";
+import { call } from "../../commons/utils";
+
+interface SetterProps {
+  action: React.Dispatch<React.SetStateAction<any>>;
+  name?: string;
+}
 interface Props {
-  name: string;
+  setter?: SetterProps; 
 }
 
-type UInputProps<T> = Exclude<TextFieldProps, FieldInputProps<T>> & Props;
+type UInputProps = TextFieldProps & Props;
 
-function UInput<T>({
-  name,
-  error,
+type AliasEvent = React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>;
+
+const UInput: React.FC<UInputProps> = ({
+  onChange,
   variant,
-  helperText,
+  setter,
   ...props
-}: UInputProps<T>): JSX.Element {
-  const [field, { error: validationError }] = useField<T>(name);
-  
-  const existsValidationError: boolean = !!validationError;
-  const existsError: boolean = error || existsValidationError;
+}: UInputProps) => {
 
-  const extractMessage = (): any => {
-    if (error && !!helperText) return helperText;
-    if (existsValidationError) return validationError;
-    return helperText;
+  const handleState = useCallback((value: any) => {
+    if (setter) {
+      const { action, name } = setter;
+      if (name) {
+        action((actual: any) => ({ ...actual, [name]: value }));
+      } else {
+        action(value);
+      }
+    }
+  }, [setter]);
+
+  const handleChange = (event: AliasEvent) => {
+    call(handleState, event.target.value);
+    call(onChange, event);
   };
 
   return (
     <FormControl fullWidth>
-      <TextField
-        variant="outlined"
-        error={existsError}
-        helperText={extractMessage()}
-        {...field}
-        {...props}
-      />
+      <TextField variant="outlined" onChange={handleChange} {...props} />
     </FormControl>
   );
-}
+};
 
 export default UInput;

@@ -30,3 +30,7 @@ export const handleSelectChange = <T>({
   const treatedValue = value;
   setter((actual: T) => ({ ...actual, [state]: treatedValue }));
 };
+
+export const call = <T>(fn: Function | undefined, ...params: any): T | void => {
+  if (fn) return fn(...params);
+};

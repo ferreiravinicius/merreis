@@ -1,4 +1,4 @@
-import { Container, Grid } from "@material-ui/core";
+import { Container, Grid, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import { handleInputChange, handleSelectChange } from "../../commons/utils";
 import UInput from "../../components/forms/UInput";
@@ -7,19 +7,18 @@ import { Group } from "../../types/models";
 import UButton from "../../components/UButton";
 import CheckOutlined from "@material-ui/icons/CheckOutlined";
 import * as Yup from "yup";
+import { Autocomplete, RenderInputParams } from "@material-ui/lab";
 
 export interface Props {}
 
 interface FormValues {
-  value: string;
   group: Group | null;
   description: string;
 }
 
 const initialValues: FormValues = {
-  value: "",
   group: null,
-  description: "",
+  description: "Teste",
 };
 
 const FormSchema = Yup.object().shape({
@@ -56,9 +55,29 @@ const RegisterExpense: React.FunctionComponent<Props> = () => {
             value={expense.description}
             onChange={handleInputChange({ setter: setExpense })}
           /> */}
+
+          <UInput 
+            label="Description"
+            value={expense.description}
+            setter={{ action: setExpense, name: "description" }}
+          />
         </Grid>
 
         <Grid item xs={12}>
+
+          {/* <Autocomplete 
+            value={expense.group}
+            options={groups}
+            getOptionLabel={(option: Group) => option.name}
+            renderInput={(params: RenderInputParams) => (
+              <TextField {...params} />
+            )}
+            onChange={handleSelectChange({
+              setter: setExpense,
+              state: "group",
+            })}
+          /> */}
+
           {/* <UInput
             name="value"
             label="Value"
@@ -68,7 +87,7 @@ const RegisterExpense: React.FunctionComponent<Props> = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <USelect
+          {/* <USelect
             name="group"
             label="Group"
             value={expense.group}
@@ -78,7 +97,7 @@ const RegisterExpense: React.FunctionComponent<Props> = () => {
               setter: setExpense,
               state: "group",
             })}
-          />
+          /> */}
         </Grid>
 
         <Grid item xs={12}>
@@ -86,7 +105,7 @@ const RegisterExpense: React.FunctionComponent<Props> = () => {
             color="primary"
             variant="contained"
             startIcon={<CheckOutlined />}
-            onClick={handleSubmit}
+            onClick={() => console.log(expense)}
           >
             Salvar
           </UButton>
@@ -96,6 +115,10 @@ const RegisterExpense: React.FunctionComponent<Props> = () => {
   );
 };
 
-const groups: Group[] = [{ id: 1, name: "Lazer" }];
+const groups: Group[] = [
+  { id: 1, name: "Lazer" },
+  { id: 2, name: "Tanto" },
+  { id: 3, name: "Faz" },
+];
 
 export default RegisterExpense;
