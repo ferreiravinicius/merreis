@@ -1,14 +1,11 @@
-import { Container, Grid, TextField } from "@material-ui/core";
-import React, { useState } from "react";
-import { handleInputChange, handleSelectChange } from "../../commons/utils";
-import UInput from "../../components/forms/UInput";
-import USelect from "../../components/forms/USelect";
-import { Group } from "../../types/models";
-import UButton from "../../components/UButton";
+import { Container, Grid } from "@material-ui/core";
 import CheckOutlined from "@material-ui/icons/CheckOutlined";
+import React, { useState } from "react";
 import * as Yup from "yup";
-import { Autocomplete, RenderInputParams } from "@material-ui/lab";
 import UAutocomplete from "../../components/forms/UAutocomplete";
+import UInput from "../../components/forms/UInput";
+import UButton from "../../components/UButton";
+import { Group } from "../../types/models";
 
 export interface Props {}
 
@@ -21,7 +18,9 @@ interface FormValues {
 const initialValues: FormValues = {
   group: null,
   description: "Teste",
-  others: []
+  others: [
+    { id: 2, name: "Tanto" },
+  ]
 };
 
 const FormSchema = Yup.object().shape({
@@ -64,26 +63,11 @@ const RegisterExpense: React.FunctionComponent<Props> = () => {
           <UAutocomplete 
             value={expense.others}
             options={groups}
-            getOptionLabel={(option: Group) => option.name}
             multiple={true}
-            onChange={handleSelectChange({
-              setter: setExpense,
-              state: "others",
-            })}
-          />
-{/* 
-          <Autocomplete 
-            value={expense.group}
-            options={groups}
             getOptionLabel={(option: Group) => option.name}
-            renderInput={(params: RenderInputParams) => (
-              <TextField {...params} />
-            )}
-            onChange={handleSelectChange({
-              setter: setExpense,
-              state: "group",
-            })}
-          /> */}
+            getOptionSelected={(option: Group, value: Group ) => option.id === value.id }
+            setter={{ action: setExpense, name: "others" }}
+          />
         </Grid>
 
         <Grid item xs={12}>

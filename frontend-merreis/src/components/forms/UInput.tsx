@@ -1,15 +1,12 @@
 import { TextFieldProps } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
-import React, { useCallback } from "react";
+import React from "react";
 import { call } from "../../commons/utils";
+import useSetter, { UseSetterProps } from "../../hooks/useSetter";
 
-interface SetterProps {
-  action: React.Dispatch<React.SetStateAction<any>>;
-  name?: string;
-}
 interface Props {
-  setter?: SetterProps; 
+  setter?: UseSetterProps<any>; 
 }
 
 type UInputProps = TextFieldProps & Props;
@@ -23,19 +20,10 @@ const UInput: React.FC<UInputProps> = ({
   ...props
 }: UInputProps) => {
 
-  const handleState = useCallback((value: any) => {
-    if (setter) {
-      const { action, name } = setter;
-      if (name) {
-        action((actual: any) => ({ ...actual, [name]: value }));
-      } else {
-        action(value);
-      }
-    }
-  }, [setter]);
+  const [ handleSetter ] = useSetter(setter);
 
   const handleChange = (event: InputChangeEvent) => {
-    call(handleState, event.target.value);
+    call(handleSetter, event.target.value);
     call(onChange, event);
   };
 
