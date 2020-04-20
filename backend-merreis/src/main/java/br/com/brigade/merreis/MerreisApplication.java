@@ -9,5 +9,4 @@ public class MerreisApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MerreisApplication.class, args);
 	}
-
 }

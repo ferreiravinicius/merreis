@@ -1,7 +1,6 @@
 package br.com.brigade.merreis.api.services;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
