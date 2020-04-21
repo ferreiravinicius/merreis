@@ -13,12 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import br.com.brigade.merreis.api.enums.RecurrencyEnum;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode(of = {}, callSuper = true)
 @Entity
 @Table(name = "TB_EXPENSE")

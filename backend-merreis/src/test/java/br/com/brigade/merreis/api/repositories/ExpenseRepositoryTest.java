@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.brigade.merreis.api.models.ExpensePO;
+import br.com.brigade.merreis.common.helpers.TestingHelper;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -26,10 +27,13 @@ public class ExpenseRepositoryTest {
 		assertNotNull(repository);
 	}
 	
+	private ExpensePO create() {
+		return TestingHelper.createExpenseWithValidFields();
+	}
+	
 	@Test
 	public void shouldPersistExpenseWhenSave() {
-		ExpensePO expense = new ExpensePO();
-		expense.setDescription("Testing");
+		ExpensePO expense = create();
 		ExpensePO savedExpense = repository.save(expense);
 		assertNotNull(savedExpense.getId());
 	}
@@ -37,7 +41,7 @@ public class ExpenseRepositoryTest {
 	@Test
 	public void shouldReturnListWithExpenseWhenFindByDescription() {
 		final String description = Mockito.anyString();
-		ExpensePO expense = new ExpensePO();
+		ExpensePO expense = create();
 		expense.setDescription(description);
 		ExpensePO savedExpense = repository.save(expense);
 		Set<ExpensePO> foundExpenses = repository.findByDescription(description);
@@ -51,4 +55,6 @@ public class ExpenseRepositoryTest {
 		Set<ExpensePO> expenses = repository.findByDescription(description);
 		assertThat(expenses).isEmpty();
 	}
+	
+	
 }

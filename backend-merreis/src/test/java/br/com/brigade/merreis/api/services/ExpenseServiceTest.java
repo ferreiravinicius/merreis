@@ -34,7 +34,8 @@ public class ExpenseServiceTest {
 	
 	@Test
 	public void shouldReturnExpenseWhenFindById() {
-		when(repository.findById(Mockito.anyLong())).thenReturn(Optional.of(new ExpensePO()));
+		ExpensePO expenseReturned = ExpensePO.builder().build();
+		when(repository.findById(Mockito.anyLong())).thenReturn(Optional.of(expenseReturned));
 		ExpensePO expense = service.findById(Mockito.anyLong());
 		assertNotNull(expense);
 	}
