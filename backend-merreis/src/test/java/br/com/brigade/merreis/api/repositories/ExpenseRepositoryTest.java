@@ -28,7 +28,7 @@ public class ExpenseRepositoryTest {
 	}
 	
 	private ExpensePO create() {
-		return TestingHelper.createExpenseWithValidFields();
+		return TestingHelper.createExpenseValidated();
 	}
 	
 	@Test

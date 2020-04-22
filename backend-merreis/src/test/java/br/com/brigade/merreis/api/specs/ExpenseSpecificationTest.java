@@ -28,13 +28,13 @@ public class ExpenseSpecificationTest {
 	private ExpenseRepository repository;
 
 	private ExpensePO createWithDescription(String description) {
-		ExpensePO expense = TestingHelper.createExpenseWithValidFields();
+		ExpensePO expense = TestingHelper.createExpenseValidated();
 		expense.setDescription(description);
 		return expense;
 	}
 	
 	private ExpensePO createWithDate(LocalDate date) {
-		ExpensePO expense = TestingHelper.createExpenseWithValidFields();
+		ExpensePO expense = TestingHelper.createExpenseValidated();
 		expense.setDate(date);
 		return expense;
 	}

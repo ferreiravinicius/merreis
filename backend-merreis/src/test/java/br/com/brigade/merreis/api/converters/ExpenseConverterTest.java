@@ -3,6 +3,7 @@ package br.com.brigade.merreis.api.converters;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.junit.Test;
@@ -32,12 +33,14 @@ public class ExpenseConverterTest {
 	public void shouldConvertRequestIntoEntity() {
 		
 		final String dateText = "20/09/1994";
+		final String valueText = "33.10";
 		
 		final ExpenseRequestDTO dto = ExpenseRequestDTO.builder()
-				.id(Mockito.anyLong())
 				.date(dateText)
-				.description(Mockito.anyString())
+				.value(valueText)
+				.id(Mockito.anyLong())
 				.recurrency(Mockito.any())
+				.description(Mockito.anyString())
 				.build();
 		
 		ExpensePO entity = converter.toEntity(dto);
@@ -47,6 +50,7 @@ public class ExpenseConverterTest {
 		assertEquals(LocalDate.of(1994, 9, 20), entity.getDate());
 		assertEquals(dto.getRecurrency(), entity.getRecurrency());
 		assertEquals(dto.getDescription(), entity.getDescription());
+		assertEquals(new BigDecimal(valueText), entity.getValue());
 	}
 	
 }
