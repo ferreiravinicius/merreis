@@ -1,4 +1,4 @@
-import { Container, Grid } from "@material-ui/core";
+import { Container, Grid, TextField } from "@material-ui/core";
 import CheckOutlined from "@material-ui/icons/CheckOutlined";
 import React, { useState } from "react";
 import * as Yup from "yup";
@@ -49,7 +49,42 @@ const RegisterExpense: React.FunctionComponent<Props> = () => {
 
   return (
     <Container maxWidth="md">
+
       <Grid container spacing={1}>
+      <Grid item xs={6}>
+          <UInput 
+            label="Description"
+            value={expense.description}
+            setter={{ action: setExpense, name: "description" }}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <UInput 
+            label="Description"
+            value={expense.description}
+            setter={{ action: setExpense, name: "description" }}
+          />
+        </Grid>
+
+        <Grid item xs={6}>
+          <UInput 
+            label="Description"
+            value={expense.description}
+            setter={{ action: setExpense, name: "description" }}
+          />
+        </Grid>
+
+
+      </Grid>
+
+      <Grid container spacing={1}>
+
+        <Grid item xs={12}>
+          <TextField
+            label="Description"
+          />
+        </Grid>
+
         <Grid item xs={12}>
           <UInput 
             label="Description"

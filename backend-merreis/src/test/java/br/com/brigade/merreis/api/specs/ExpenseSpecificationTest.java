@@ -40,8 +40,7 @@ public class ExpenseSpecificationTest {
 	}
 	
 	@Test
-	public void descriptionContaining_shouldReturnAllExpensesConainingText() {
-
+	public void it_should_return_list_expenses_containing_specific_text_case_insensitive() {
 		final String textArg = "dope";
 
 		List<ExpensePO> expenses = Stream.of(
@@ -57,11 +56,10 @@ public class ExpenseSpecificationTest {
 		List<ExpensePO> foundExpenses = repository.findAll(ExpenseSpecification.descriptionContaining(textArg));
 		assertNotNull(foundExpenses);
 		assertThat(foundExpenses).hasSize(4);
-		
 	}
 	
 	@Test
-	public void dateGreaterEqualThan_shouldReturnAllExpensesGreaterEqualSpecificDate() {
+	public void it_should_return_list_expenses_with_date_greater_or_equal_to_specific_date() {
 		
 		LocalDate september20 = LocalDate.of(2020, Month.SEPTEMBER, 5);
 		LocalDate september15 = LocalDate.of(2020, Month.SEPTEMBER, 15);

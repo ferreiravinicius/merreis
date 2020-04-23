@@ -13,14 +13,14 @@ import org.mockito.junit.MockitoJUnitRunner;
 public class DateHelperTest {
 	
 	@Test
-	public void shouldConvertStringLocalDateUsingBrazillianCommonPattern() {
+	public void it_should_convert_string_to_local_date_using_brazillian_pattern() {
 		final String textDate = "20/09/1994";
 		LocalDate dateConverted = DateHelper.toLocalDate(textDate);
 		assertEquals(LocalDate.of(1994, 9, 20), dateConverted);
 	}
 	
 	@Test
-	public void shouldReturnNullWhenGivenEmptyOrInvalidString() {
+	public void it_should_return_null_when_given_empty_or_invalid_string() {
 		final String textEmpty = "";
 		final String  textInvalid = "25/111/29";
 		

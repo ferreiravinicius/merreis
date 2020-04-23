@@ -8,12 +8,12 @@ import java.time.LocalDate;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.brigade.merreis.MerreisConfiguration;
+import br.com.brigade.merreis.api.enums.RecurrencyEnum;
 import br.com.brigade.merreis.api.models.ExpensePO;
 import br.com.brigade.merreis.api.transfers.ExpenseRequestDTO;
 
@@ -25,12 +25,12 @@ public class ExpenseConverterTest {
 	private ExpenseConverter converter;
 	
 	@Test
-	public void shouldWireConverterComponent() {
+	public void it_should_autowire_converter() {
 		assertNotNull(converter);
 	}
 	
 	@Test
-	public void shouldConvertRequestIntoEntity() {
+	public void it_should_convert_request_dto_into_entity() {
 		
 		final String dateText = "20/09/1994";
 		final String valueText = "33.10";
@@ -38,9 +38,9 @@ public class ExpenseConverterTest {
 		final ExpenseRequestDTO dto = ExpenseRequestDTO.builder()
 				.date(dateText)
 				.value(valueText)
-				.id(Mockito.anyLong())
-				.recurrency(Mockito.any())
-				.description(Mockito.anyString())
+				.id(123l)
+				.recurrency(RecurrencyEnum.MONTHLY)
+				.description("Expense description")
 				.build();
 		
 		ExpensePO entity = converter.toEntity(dto);
