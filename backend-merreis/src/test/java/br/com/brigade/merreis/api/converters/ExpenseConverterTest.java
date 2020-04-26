@@ -15,7 +15,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import br.com.brigade.merreis.MerreisConfiguration;
 import br.com.brigade.merreis.api.enums.RecurrencyEnum;
 import br.com.brigade.merreis.api.models.ExpensePO;
+import br.com.brigade.merreis.api.transfers.ExpenseOutputDTO;
 import br.com.brigade.merreis.api.transfers.ExpenseRequestDTO;
+import br.com.brigade.merreis.common.helpers.DateHelper;
+import br.com.brigade.merreis.common.helpers.Lorem;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = { ExpenseConverter.class, MerreisConfiguration.class })
@@ -53,4 +56,19 @@ public class ExpenseConverterTest {
 		assertEquals(new BigDecimal(valueText), entity.getValue());
 	}
 	
+	@Test
+	public void it_should_convert_expense_entity_to_output_dto() {
+		
+		ExpensePO expense = Lorem.Expense.random();
+		ExpenseOutputDTO outputExpense = converter.toOutput(expense);
+		
+		assertNotNull(outputExpense);
+		assertEquals(expense.getId(), outputExpense.getId());
+		assertEquals(expense.getDescription(), outputExpense.getDescription());
+		assertEquals(expense.getValue(), outputExpense.getValue());
+		assertEquals(expense.getRecurrency(), outputExpense.getRecurrency());
+		LocalDate outputDate = DateHelper.toLocalDate(outputExpense.getDate());
+		assertEquals(expense.getDate(), outputDate);
+		
+	}
 }

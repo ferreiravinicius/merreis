@@ -1,9 +1,6 @@
 package br.com.brigade.merreis.api.transfers;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.Length;
+import java.math.BigDecimal;
 
 import br.com.brigade.merreis.api.enums.RecurrencyEnum;
 import lombok.AllArgsConstructor;
@@ -18,22 +15,16 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = { "id" } )
-public class ExpenseRequestDTO {
+@EqualsAndHashCode(of = { "id" })
+public class ExpenseOutputDTO {
 	
 	private Long id;
 	
-	@NotEmpty
-	@Length(min = 3)
-	private String description;
-	
-	@NotNull
 	private String date;
 	
-	@NotEmpty
-	private String value;
+	private BigDecimal value;
 	
-	@NotNull
+	private String description;
+	
 	private RecurrencyEnum recurrency;
-	
 }
