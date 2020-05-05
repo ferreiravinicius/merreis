@@ -54,15 +54,7 @@ public class ExpenseService extends BaseService {
 
 	public List<ExpenseOutputDTO> getAllExpensesCurrentMonth() {
 		LocalDate dateCurrent = LocalDate.now();
-		LocalDate dateWithFirstDayCurrentMonth = LocalDate.of(dateCurrent.getYear(), dateCurrent.getMonth(), 1);
-		Specification<ExpensePO> dateSpec = ExpenseSpecification.dateGreaterEqualThan(dateWithFirstDayCurrentMonth);
-		List<ExpensePO> currentExpenses = repository.findAll(dateSpec);
-		
-		List<ExpenseOutputDTO> outputExpenses = currentExpenses.parallelStream()
-				.map(expenseConverter::toOutput)
-				.collect(Collectors.toList());
-		
-		return outputExpenses;
+		return getAllExpensesSpecificYearMonth(dateCurrent.getYear(), dateCurrent.getMonth());
 	}
 
 	public List<ExpenseOutputDTO> getAllExpensesSpecificYearMonth(Integer year, Month month) {

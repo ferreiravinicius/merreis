@@ -3,8 +3,10 @@ package br.com.brigade.merreis.api.services;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
@@ -37,6 +40,7 @@ import br.com.brigade.merreis.common.helpers.TestingHelper;
 @ContextConfiguration(classes = { ExpenseService.class, MethodValidationPostProcessor.class })
 public class ExpenseServiceTest {
 	
+	@SpyBean
 	@Autowired
 	private ExpenseService service;
 	
@@ -126,17 +130,10 @@ public class ExpenseServiceTest {
 	}
 	
 	@Test
-	public void it_should_return_list_dto_at_get_expenses_current_month() {
-		
-		ExpenseOutputDTO outputExpense = Lorem.ExpenseOutput.random();
-		List<ExpensePO> foundExpenses = Arrays.asList(Lorem.Expense.random());
-		
-		when(repository.findAll(ExpenseSpecification.dateGreaterEqualThan(Mockito.any()))).thenReturn(foundExpenses);
-		when(expenseConverter.toOutput(Mockito.any())).thenReturn(outputExpense);
-		
-		List<ExpenseOutputDTO> currentExpenses = service.getAllExpensesCurrentMonth();
-		assertNotNull(currentExpenses);
-		assertThat(currentExpenses).anyMatch(expense -> Objects.equals(expense.getDescription(), outputExpense.getDescription()));
+	public void it_should_call_another_method_at_get_expenses_current_month() {
+		LocalDate now = LocalDate.now();
+		service.getAllExpensesCurrentMonth();
+		verify(service).getAllExpensesSpecificYearMonth(now.getYear(), now.getMonth());
 	}
 	
 	@Test
