@@ -1,6 +1,7 @@
 package br.com.brigade.merreis.api.services;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,7 +35,7 @@ public class ExpenseService extends BaseService {
 		Optional<ExpensePO> foundExpense = repository.findById(id);
 		return foundExpense.orElseThrow(() -> new RuntimeException());
 	}
-
+	
 	public ExpensePO create(@Valid ExpenseRequestDTO inputExpense) {
 		ExpensePO expense = expenseConverter.toEntity(inputExpense);
 		return repository.save(expense);
@@ -57,7 +58,19 @@ public class ExpenseService extends BaseService {
 		Specification<ExpensePO> dateSpec = ExpenseSpecification.dateGreaterEqualThan(dateWithFirstDayCurrentMonth);
 		List<ExpensePO> currentExpenses = repository.findAll(dateSpec);
 		
-		List<ExpenseOutputDTO> outputExpenses = currentExpenses.stream()
+		List<ExpenseOutputDTO> outputExpenses = currentExpenses.parallelStream()
+				.map(expenseConverter::toOutput)
+				.collect(Collectors.toList());
+		
+		return outputExpenses;
+	}
+
+	public List<ExpenseOutputDTO> getAllExpensesSpecificYearMonth(Integer year, Month month) {
+		LocalDate dateWithFirstDayYearMonth = LocalDate.of(year, month, 1);
+		Specification<ExpensePO> dateSpec = ExpenseSpecification.dateGreaterEqualThan(dateWithFirstDayYearMonth);
+		List<ExpensePO> currentExpenses = repository.findAll(dateSpec); //TODO Sort.by(Direction.ASC, ExpensePO_.DATE)
+		
+		List<ExpenseOutputDTO> outputExpenses = currentExpenses.parallelStream()
 				.map(expenseConverter::toOutput)
 				.collect(Collectors.toList());
 		

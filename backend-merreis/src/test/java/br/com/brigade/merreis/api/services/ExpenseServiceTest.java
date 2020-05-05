@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -125,7 +126,7 @@ public class ExpenseServiceTest {
 	}
 	
 	@Test
-	public void it_should_return_list_expenses_outputs_dto() {
+	public void it_should_return_list_dto_at_get_expenses_current_month() {
 		
 		ExpenseOutputDTO outputExpense = Lorem.ExpenseOutput.random();
 		List<ExpensePO> foundExpenses = Arrays.asList(Lorem.Expense.random());
@@ -137,4 +138,20 @@ public class ExpenseServiceTest {
 		assertNotNull(currentExpenses);
 		assertThat(currentExpenses).anyMatch(expense -> Objects.equals(expense.getDescription(), outputExpense.getDescription()));
 	}
+	
+	@Test
+	public void it_should_return_list_dto_at_get_expenses_of_specific_year_and_month() {
+		
+		ExpenseOutputDTO outputExpense = Lorem.ExpenseOutput.random();
+		List<ExpensePO> foundExpenses = Arrays.asList(Lorem.Expense.random());
+		
+		when(repository.findAll(ExpenseSpecification.dateGreaterEqualThan(Mockito.any()))).thenReturn(foundExpenses);
+		when(expenseConverter.toOutput(Mockito.any())).thenReturn(outputExpense);
+		
+		List<ExpenseOutputDTO> currentExpenses = service.getAllExpensesSpecificYearMonth(2020, Month.SEPTEMBER);
+		assertNotNull(currentExpenses);
+		assertThat(currentExpenses).anyMatch(expense -> Objects.equals(expense.getDescription(), outputExpense.getDescription()));
+		
+	}
+	
 }
